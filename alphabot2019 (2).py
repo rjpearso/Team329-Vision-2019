@@ -92,7 +92,7 @@ while True:
        except Exception as ex:
     	   print(ex)
            turnAng = 999
-           time.sleep(.1)
+           time.sleep(.5)
            pass
     if True:
         fund = False
