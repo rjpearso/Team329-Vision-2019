@@ -22,7 +22,7 @@ from networktables import NetworkTables as nt
 
 count = 1
 areaFactor = 0.8
-tapeCenterWidth = 12
+tapeCenterWidth = 11.3
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.settimeout(0)
 print("Pi is connected to NetworkTables")
