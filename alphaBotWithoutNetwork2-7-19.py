@@ -93,7 +93,7 @@ while True:
     except:
        print("Connection lost!")
        turnAng = 999
-       time.sleep(.1)
+       time.sleep(2)
        pass
         '''
 
