@@ -22,6 +22,7 @@ from networktables import NetworkTables as nt
 
 count = 1
 areaFactor = 0.8
+tapeCenterWidth = 12
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.settimeout(0)
 print("Pi is connected to NetworkTables")
@@ -53,6 +54,11 @@ leftCenter = 999
 turnangle = 999
 arb = 10000
 ars = 200 
+def contour(cts):
+    rect = cv2.minAreaRect(cts)
+    box = cv2.boxPoints(rect)
+    return(np.int0(box),rect)
+    
 def CalcProperties(rightCenter, leftCenter):
     x = (rightCenter[1][0] * rightCenter[1][1] + leftCenter[1][0] * leftCenter[1][1]) / 2
     dist = (1421 * x ** (-.464)) - 3.9375
@@ -109,17 +115,11 @@ while True:
 
                 too_small = []
                 ct = 0
+		
                 for cts in cnts:
-                    def contour():
-                        global rect
-                        rect = cv2.minAreaRect(cts)
-                        box = cv2.boxPoints(rect)
-                        boxd = np.int0(box)
-
-                        cv2.drawContours(display,[box.astype(int)],0,(0,0,255),2) #Draws box on image these are the red boxes.  Its what you see
-                    contour()
+                    cv2.drawContours(display,[box.astype(int)],0,(0,0,255),2) #Draws box on image these are the red boxes.  Its what you see
+                    boxd,rect = contour(cts)
                     area1 = list(rect)
-                    
                     
                     area = area1[1][0]*area1[1][1] 
                     
@@ -157,7 +157,7 @@ while True:
                             
                             
                         
-                        contour()
+                        boxd,rect = contour(cts)
                         
                         if len(rightTargets) >= 1 and len(leftTargets) >= 1:
                             rightCenter = min(rightTargets, key=lambda x:abs(x[0][0]-320))
@@ -173,7 +173,7 @@ while True:
                                     heightLeft = (leftCenter[0][1] + (leftCenter[1][1]/2)) * 2
                                     dist, theta = OffsetCalcProperties(rightCenter, leftCenter)
                                 
-                                    pixInchConv = 11 / abs((leftCenter[0][0] - rightCenter[0][0]))
+                                    pixInchConv = tapeCenterWidth / abs((leftCenter[0][0] - rightCenter[0][0]))
                                     perpDist = pixInchConv * (((leftCenter[0][0] + rightCenter[0][0]) / 2) - 320)
                                     turnangle = round(math.degrees(math.atan(perpDist / dist) + theta),1)
                                     tryAgain = False
@@ -181,14 +181,14 @@ while True:
                                 elif leftCenter[0][0] > rightCenter[0][0] :
                                     dist = CalcProperties(rightCenter, leftCenter)
 									
-                                    pixInchConv = 10 / abs((leftCenter[0][0] - rightCenter[0][0]))
+                                    pixInchConv = tapeCenterWidth / abs((leftCenter[0][0] - rightCenter[0][0]))
                                     perpDist = pixInchConv * (((leftCenter[0][0] + rightCenter[0][0]) / 2) - 320)
                                     turnangle = round(math.degrees(math.atan(perpDist / dist)),1)
                                     tryAgain = True
                                 else:
                                     dist = CalcProperties(rightCenter, leftCenter)
 
-                                    pixInchConv = 10 / abs((leftCenter[0][0] - rightCenter[0][0]))
+                                    pixInchConv = tapeCenterWidth / abs((leftCenter[0][0] - rightCenter[0][0]))
                                     perpDist = pixInchConv * (((leftCenter[0][0] + rightCenter[0][0]) / 2) - 320) 
                                     turnangle = round(math.degrees(math.atan(perpDist / dist)),1)
                                     tryAgain = True
@@ -197,7 +197,7 @@ while True:
                                 dist = CalcProperties(rightCenter, leftCenter)
                                 
 
-                                pixInchConv = 10 / abs((leftMaxArea[0][0] - rightMaxArea[0][0]))
+                                pixInchConv = tapeCenterWidth / abs((leftMaxArea[0][0] - rightMaxArea[0][0]))
                                 perpDist = pixInchConv * (((leftMaxArea[0][0] + rightMaxArea[0][0]) / 2) - 320)
                                 turnangle = round(math.degrees(math.atan(perpDist / dist)),1)
                                 tryAgain = True
@@ -205,7 +205,7 @@ while True:
                             elif rightMaxArea[0][0] > rightCenter[0][0]:
                                 dist = CalcProperties(rightCenter, leftCenter)
 
-                                pixInchConv = 10 / abs((leftMaxArea[0][0] - rightMaxArea[0][0]))
+                                pixInchConv = tapeCenterWidth / abs((leftMaxArea[0][0] - rightMaxArea[0][0]))
                                 perpDist = pixInchConv * (((leftMaxArea[0][0] + rightMaxArea[0][0]) / 2) - 320)
                                 turnangle = round(math.degrees(math.atan(perpDist / dist)),1)
                                 tryAgain = True
@@ -214,7 +214,7 @@ while True:
                                 dist = CalcProperties(rightCenter, leftCenter)
                                 
                                 
-                                pixInchConv = 11 / abs((leftMaxArea[0][0] - rightMaxArea[0][0]))
+                                pixInchConv = tapeCenterWidth / abs((leftMaxArea[0][0] - rightMaxArea[0][0]))
                                 perpDist = pixInchConv * (((leftMaxArea[0][0] + rightMaxArea[0][0]) / 2) - 320)
                                 turnangle = round(math.degrees(math.atan(perpDist / dist)),1)
                                 tryAgain = True
