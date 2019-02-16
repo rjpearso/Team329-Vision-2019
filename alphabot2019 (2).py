@@ -118,7 +118,7 @@ while True:
                 ct = 0
 		
                 for cts in cnts:
-                    cv2.drawContours(display,[box.astype(int)],0,(0,0,255),2) #Draws box on image these are the red boxes.  Its what you see
+                    #cv2.drawContours(display,[box.astype(int)],0,(0,0,255),2) #Draws box on image these are the red boxes.  Its what you see
                     boxd,rect = contour(cts)
                     area1 = list(rect)
                     
