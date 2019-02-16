@@ -89,7 +89,8 @@ while True:
                sd = nt.getTable("SmartDashboard")
                print("Network reconnected")
                break                
-       except:
+       except Exception as ex:
+    	   print(ex)
            turnAng = 999
            time.sleep(.1)
            pass
