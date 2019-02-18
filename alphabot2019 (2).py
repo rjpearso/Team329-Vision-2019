@@ -70,7 +70,10 @@ def OffsetCalcProperties(rightCenter, leftCenter):
     theta = math.asin(xOffSet/dist)
     dist = dist * math.cos(theta)
     return(dist, theta)
-
+def sdPut(turnangle, tryAgain, dist):
+	sd.putNumber("Turn Angle", turnangle)
+	sd.putNumber("Try Again", tryAgain)
+	sd.putNumber('Distance Away',dist)
 def piAlive():
     global piIsAlive
 
@@ -223,12 +226,8 @@ while True:
                 PiOffsetX = 0
                 PiOffsetDist = 0
                 dist = PiOffsetDist + dist 
-                def sdPut():
-                    sd.putNumber("Turn Angle", turnangle)
-                    sd.putNumber("Try Again", tryAgain)
-                    sd.putNumber('Distance Away',dist)
                 if connected == True:
-                    sdPut()
+                    sdPut(turnangle, tryAgain, dist))
 				
 ##                fps_time = time.time 
 ##                fps_time = float(time.time)
