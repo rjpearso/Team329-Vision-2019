@@ -19,7 +19,10 @@ import os
 import select
 import socket
 from networktables import NetworkTables as nt
-
+global start_time
+start_time = time.time()
+global turnangle
+turnangle = 999
 count = 1
 areaFactor = 0.8
 tapeCenterWidth = 11.3
@@ -81,6 +84,7 @@ def piAlive():
     sd.putNumber('Pi is alive', piIsAlive)
 while True:
     count += 1
+    turnangle = 999
     piAlive()
     
     if count > 200: #Only check network connection every 200 Frames
@@ -229,7 +233,7 @@ while True:
                 dist = PiOffsetDist + dist
                 
                 fps = 1.0 / ((time.time() - start_time)/200)
-                def sdPut():
+                def sdPut(turnangle,tryAgain,dist,fps):
                     turnangle=round(turnangle,1)
                     dist = round(dist,1)
                     fps = round(fps,1)
@@ -238,7 +242,7 @@ while True:
                     sd.putNumber('Distance Away',dist)
                     sd.putNumber('FPS',fps)
                 if connected == True:
-                    sdPut()
+                    sdPut(turnangle,tryAgain,dist,fps)
 				
 ##                fps_time = time.time 
 ##                fps_time = float(time.time)
