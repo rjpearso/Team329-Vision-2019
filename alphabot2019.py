@@ -231,12 +231,12 @@ while True:
                 PiOffsetX = 0
                 PiOffsetDist = 0
                 dist = PiOffsetDist + dist
-                
-                fps = 1.0 / ((time.time() - start_time)/200)
+                if count >=100:
+                	fps = 1.0 / ((time.time() - start_time)/count)
                 def sdPut(turnangle,tryAgain,dist,fps):
                     turnangle=round(turnangle,1)
                     dist = round(dist,1)
-                    fps = round(fps,1)
+                    fps = round(fps,0)
                     sd.putNumber("Turn Angle", turnangle)
                     sd.putNumber("Try Again", tryAgain)
                     sd.putNumber('Distance Away',dist)
