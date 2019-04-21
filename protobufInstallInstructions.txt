@@ -1,0 +1,35 @@
+if other versions of protoc are installed proceed to the directory it is installed in and run make uninstall
+then run sudo apt-get remove protobuf-compiler
+
+sudo apt-get install autoconf automake libtool curl make g++ unzip
+
+install protobuf version for python in zip or tar.gz (3.4.0)
+
+extract protobuf version (unzip) and enter the directory
+
+/.configure
+
+Optional: Untested, make clean
+
+make
+
+Optional: Untested, make clean
+
+make check
+
+sudo make install
+
+sudo ldconfig
+
+
+^^ Ignore this unless on a version of ubuntuo below 18
+
+For installs that work universally
+
+
+remove 3.0.0, sudo apt-get remove protobuf-compiler
+
+Download the precompiled binaries
+Run wget https://github.com/protocolbuffers/protobuf/releases/download/v3.4.0/protoc-3.4.0-linux-x86_64.zip
+Source it
+
