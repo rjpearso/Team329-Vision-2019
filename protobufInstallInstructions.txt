@@ -1,3 +1,6 @@
+Install protobuf BEFORE Tensorflow
+
+
 if other versions of protoc are installed proceed to the directory it is installed in and run make uninstall
 then run sudo apt-get remove protobuf-compiler
 
