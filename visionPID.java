@@ -146,6 +146,7 @@ public class PiTurning extends Command {
     }
 
     public void PID(){
+	currAngle = Robot.sDrive.ahrs.getYaw();
         error = currAngle - targetAngle; //Math.abs(currAngle - targetAngle);
         this.integral += (error*.02); // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
         derivative = (error - this.previous_error) / .02;
